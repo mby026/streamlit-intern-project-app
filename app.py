@@ -2,8 +2,8 @@
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
-from keras.models import Sequential
-from keras.layers import Dense, LSTM
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, LSTM
 import matplotlib.pyplot as plt
 import streamlit as st
 from google.oauth2 import service_account
@@ -21,7 +21,7 @@ project_id = 'q-chang-data-sandbox'
 client = bigquery.Client(credentials=credentials, project=project_id)
 
 # Read the CSV file
-df_job_2023 = pd.read_csv('path/to/your/csv/file.csv')
+df_job_2023 = pd.read_csv('/content/drive/MyDrive/bq-results-20240711-070338-1720681439559/bq-results-20240711-070338-1720681439559.csv')
 
 # Your SQL query
 query_job_2024 = """
@@ -67,7 +67,7 @@ team_name_options = st.sidebar.multiselect('Select Team Name', df_job['team_name
 grade_options = st.sidebar.multiselect('Select Grade', df_job['grade'].unique(), default=df_job['grade'].unique())
 sub_district_options = st.sidebar.multiselect('Select Sub District', df_job['address_info_sub_district_name'].unique(), default=df_job['address_info_sub_district_name'].unique())
 district_options = st.sidebar.multiselect('Select District', df_job['address_info_district_name'].unique(), default=df_job['address_info_district_name'].unique())
-province_options = st.sidebar.multiselect('Select Province', df_job['address_info_province_name'].unique(), default=df_job['address_info_province_name'].unique())
+province_options = st.sidebar.multiselect('Select Province', df_job['address_info_province_name'].unique(), default[df_job['address_info_province_name'].unique()])
 
 # Filter the dataframe based on the selected options
 filtered_df = df_job[
