@@ -21,7 +21,7 @@ project_id = 'q-chang-data-sandbox'
 client = bigquery.Client(credentials=credentials, project=project_id)
 
 # Read the CSV file
-df_job_2023 = pd.read_csv('path/to/your/csv/file.csv')
+df_job_2023 = pd.read_csv('/content/drive/MyDrive/bq-results-20240711-070338-1720681439559/bq-results-20240711-070338-1720681439559.csv')
 
 # Your SQL query
 query_job_2024 = """
