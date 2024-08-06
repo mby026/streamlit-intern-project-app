@@ -1,9 +1,9 @@
-pandas
-numpy
-streamlit
-scikit-learn
-keras==2.6.0
-tensorflow==2.6.0
-matplotlib
-google-auth
-google-cloud-bigquery
+echo "pandas" > requirements.txt
+echo "numpy" >> requirements.txt
+echo "streamlit" >> requirements.txt
+echo "scikit-learn" >> requirements.txt
+echo "keras==2.4.3" >> requirements.txt
+echo "tensorflow==2.6.0" >> requirements.txt
+echo "matplotlib" >> requirements.txt
+echo "google-auth" >> requirements.txt
+echo "google-cloud-bigquery" >> requirements.txt
