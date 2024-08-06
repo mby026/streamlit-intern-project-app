@@ -1,0 +1,10 @@
+pandas
+numpy
+streamlit
+scikit-learn
+keras
+tensorflow
+matplotlib
+google-auth
+google-cloud-bigquery
+pyngrok
