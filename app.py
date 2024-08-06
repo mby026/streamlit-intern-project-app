@@ -10,34 +10,18 @@ from google.oauth2 import service_account
 from google.cloud import bigquery
 
 # Authenticate using Streamlit secrets
-try:
-    credentials = service_account.Credentials.from_service_account_info(
-        st.secrets["gcp_service_account"]
-    )
-except Exception as e:
-    st.error(f"Error loading Google Cloud credentials: {e}")
-    st.stop()
+credentials = service_account.Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"]
+)
 
 # Set your project ID
 project_id = 'q-chang-data-sandbox'
 
 # Initialize a BigQuery client
-try:
-    client = bigquery.Client(credentials=credentials, project=project_id)
-except Exception as e:
-    st.error(f"Error initializing BigQuery client: {e}")
-    st.stop()
+client = bigquery.Client(credentials=credentials, project=project_id)
 
 # Read the CSV file
-csv_file_path = '/content/drive/MyDrive/bq-results-20240711-070338-1720681439559/bq-results-20240711-070338-1720681439559.csv'
-try:
-    df_job_2023 = pd.read_csv(csv_file_path)
-except FileNotFoundError:
-    st.error(f"CSV file not found: {csv_file_path}")
-    st.stop()
-except Exception as e:
-    st.error(f"Error reading CSV file: {e}")
-    st.stop()
+df_job_2023 = pd.read_csv('path/to/your/csv/file.csv')
 
 # Your SQL query
 query_job_2024 = """
@@ -46,11 +30,7 @@ FROM `q-chang-data-sandbox.indv_arkaporn.download_q_chang_operation_t`
 """
 
 # Execute the query and convert the result to a pandas DataFrame
-try:
-    df_job_2024 = client.query(query_job_2024).to_dataframe()
-except Exception as e:
-    st.error(f"Error executing BigQuery query: {e}")
-    st.stop()
+df_job_2024 = client.query(query_job_2024).to_dataframe()
 
 # Convert 'created_date' to datetime and format to show only the date part
 df_job_2023['created_date'] = pd.to_datetime(df_job_2023['created_date']).dt.date
@@ -82,12 +62,12 @@ st.sidebar.header('Filter options')
 sale_model_options = st.sidebar.multiselect('Select Sale Model', df_job['sale_model'].unique(), default=df_job['sale_model'].unique())
 channel_options = st.sidebar.multiselect('Select Channel', df_job['channel'].unique(), default=df_job['channel'].unique())
 type_ow_name_options = st.sidebar.multiselect('Select Type of Work Name', df_job['type_ow_name'].unique(), default=df_job['type_ow_name'].unique())
-type_of_job_options = st.sidebar.multiselect('Select Type of Job', df_job['type_of_job'].unique(), default[df_job['type_of_job'].unique()])
-team_name_options = st.sidebar.multiselect('Select Team Name', df_job['team_name'].unique(), default[df_job['team_name'].unique()])
-grade_options = st.sidebar.multiselect('Select Grade', df_job['grade'].unique(), default[df_job['grade'].unique()])
-sub_district_options = st.sidebar.multiselect('Select Sub District', df_job['address_info_sub_district_name'].unique(), default[df_job['address_info_sub_district_name'].unique()])
-district_options = st.sidebar.multiselect('Select District', df_job['address_info_district_name'].unique(), default[df_job['address_info_district_name'].unique()])
-province_options = st.sidebar.multiselect('Select Province', df_job['address_info_province_name'].unique(), default[df_job['address_info_province_name'].unique()])
+type_of_job_options = st.sidebar.multiselect('Select Type of Job', df_job['type_of_job'].unique(), default=df_job['type_of_job'].unique())
+team_name_options = st.sidebar.multiselect('Select Team Name', df_job['team_name'].unique(), default=df_job['team_name'].unique())
+grade_options = st.sidebar.multiselect('Select Grade', df_job['grade'].unique(), default=df_job['grade'].unique())
+sub_district_options = st.sidebar.multiselect('Select Sub District', df_job['address_info_sub_district_name'].unique(), default=df_job['address_info_sub_district_name'].unique())
+district_options = st.sidebar.multiselect('Select District', df_job['address_info_district_name'].unique(), default=df_job['address_info_district_name'].unique())
+province_options = st.sidebar.multiselect('Select Province', df_job['address_info_province_name'].unique(), default=df_job['address_info_province_name'].unique())
 
 # Filter the dataframe based on the selected options
 filtered_df = df_job[
